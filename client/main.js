@@ -17,13 +17,22 @@ let roomNumber,
   dataChannel;
 
 const socket = io("https://web-rtc-server-9cim.onrender.com");
+if (!socket.connected) {
+  alert("An error ocurred with our servers. Please try again later");
+}
+// const socket = io("http://localhost:3333");
 
 const iceServers = {
   iceServer: [
     // { urls: "stun:stun.services.mozilla.com" },
     // { urls: "stun:stun.l.google.mozilla.com:19302" },
     {
-      urls: "https://coturn-server-l452.onrender.com:3478",
+      urls: "turn:localhost:3478",
+      credential: "password",
+      username: "username",
+    },
+    {
+      urls: "turn:coturn-server-l452.onrender.com:3478",
       credential: "password",
       username: "username",
     },
