@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>WebRTC Demo</h1>
+    <div id="select-room">
+      <label for="">Type room name</label>
+      <input type="text" id="room-input" />
+      <button id="enter-room">Enter</button>
+    </div>
+    <div id="consulting-room" style="display: none">
+      <h2 id="call-name-title"></h2>
+      <p>
+        <input type="text" id="call-name-input" />
+        <button id="set-name">Set Name</button>
+      </p>
+      <video id="local-video" autoplay></video>
+      <video id="remote-video" autoplay></video>
+    </div>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="./main.js"></script>
+  </body>
+</html>
