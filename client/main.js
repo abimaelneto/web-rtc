@@ -16,7 +16,7 @@ let roomNumber,
   isCaller,
   dataChannel;
 
-const socket = io("http://localhost:3333");
+const socket = io("https://web-rtc-server-9cim.onrender.com");
 
 const iceServers = {
   iceServer: [
