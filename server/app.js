@@ -8,7 +8,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
-    origin: "https://web-rtc-jet.vercel.app/",
+    origin: "https://web-rtc-jet.vercel.app",
     methods: ["GET", "POST"],
   },
 });
