@@ -22,9 +22,9 @@ let roomNumber,
   isCaller,
   dataChannel;
 
-// const socket = io("https://web-rtc-server-9cim.onrender.com");
+const socket = io("https://web-rtc-server-9cim.onrender.com");
 
-const socket = io("http://localhost:3333");
+// const socket = io("http://localhost:3333");
 
 const iceServers = {
   iceServer: [
@@ -47,6 +47,24 @@ const streamConstraints = {
   video: true,
   audio: true,
 };
+
+navigator.permissions
+  .query({ name: "microphone" })
+  .then((permissionObj) => {
+    console.log(permissionObj.state);
+  })
+  .catch((error) => {
+    console.log("Got error :", error);
+  });
+
+navigator.permissions
+  .query({ name: "camera" })
+  .then((permissionObj) => {
+    console.log(permissionObj.state);
+  })
+  .catch((error) => {
+    console.log("Got error :", error);
+  });
 
 enterRoomBtn.onclick = () => {
   if (!roomNumberInput.value) {
