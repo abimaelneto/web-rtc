@@ -104,7 +104,8 @@ muteBtns.forEach(
       }
 
       if (!dataChannel) return;
-      dataChannel.send(JSON.stringify({ type: "mute", value: btn.name }));
+      const value = btn.name == "local" ? "remote" : "local";
+      dataChannel.send(JSON.stringify({ type: "mute", value }));
     })
 );
 
