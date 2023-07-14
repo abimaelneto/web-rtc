@@ -8,7 +8,11 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
-    origin: ["https://web-rtc-jet.vercel.app", "http://localhost:5500"],
+    origin: [
+      "https://web-rtc-jet.vercel.app",
+      "http://localhost:5500",
+      "http://127.0.0.1:5500",
+    ],
     methods: ["GET", "POST"],
   },
 });
