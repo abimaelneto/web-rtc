@@ -3,15 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"
+    user-scalable=no" />
+    <title>WebRTC Demo</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <h1>WebRTC Demo</h1>
-    <div id="test"></div>
     <div id="select-room">
-      <label for="">Type room name</label>
+      <label for="">Room name</label>
       <input type="text" id="room-input" />
       <button id="enter-room">Enter</button>
     </div>
@@ -19,36 +19,19 @@
       <h2 id="call-name-title"></h2>
       <p>
         <input type="text" id="call-name-input" />
-        <button id="set-name">Set Name</button>
+        <button id="set-name">Send</button>
       </p>
-      <div id="chat"></div>
       <div class="video-container">
         <button class="mute" name="local">Mute</button>
         <video id="local-video" autoplay></video>
       </div>
       <div class="video-container">
         <button class="mute" name="remote">Mute</button>
-
         <video id="remote-video" autoplay></video>
       </div>
     </div>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script src="./main.js"></script>
-    <style>
-      video {
-        position: relative;
-      }
-      button.mute {
-        background: grey;
-        position: absolute;
-        z-index: 10;
-      }
-
-      .mute {
-      }
-      .muted {
-        background: red !important;
-      }
-    </style>
+    <style></style>
   </body>
 </html>

@@ -5,6 +5,9 @@ const enterRoomBtn = document.querySelector("#enter-room");
 const localVideo = document.querySelector("#local-video");
 const remoteVideo = document.querySelector("#remote-video");
 
+const localVideoContainer = localVideo.parentElement;
+const remoteVideoContainer = remoteVideo.parentElement;
+
 const muteBtns = document.querySelectorAll("button.mute");
 
 const chat = document.querySelector("#chat");
@@ -22,9 +25,9 @@ let roomNumber,
   isCaller,
   dataChannel;
 
-const socket = io("https://web-rtc-server-9cim.onrender.com");
+// const socket = io("https://web-rtc-server-9cim.onrender.com");
 
-// const socket = io("http://localhost:3333");
+const socket = io("http://localhost:3333");
 
 const iceServers = {
   iceServer: [
@@ -50,15 +53,6 @@ const streamConstraints = {
 
 navigator.permissions
   .query({ name: "microphone" })
-  .then((permissionObj) => {
-    console.log(permissionObj.state);
-  })
-  .catch((error) => {
-    console.log("Got error :", error);
-  });
-
-navigator.permissions
-  .query({ name: "camera" })
   .then((permissionObj) => {
     console.log(permissionObj.state);
   })
@@ -112,11 +106,11 @@ muteBtns.forEach(
 socket.on("created", async (room) => {
   try {
     const stream = await navigator.mediaDevices.getUserMedia(streamConstraints);
-    document.querySelector("#test").innerHTML = "oi" + stream;
 
     localStream = stream;
     localVideo.srcObject = stream;
-
+    localVideoContainer.style.display = "flex";
+    console.log(localVideo);
     isCaller = true;
   } catch (err) {
     alert(err);
@@ -126,10 +120,9 @@ socket.on("created", async (room) => {
 socket.on("joined", async (room) => {
   try {
     const stream = await navigator.mediaDevices.getUserMedia(streamConstraints);
-    document.querySelector("#test").innerHTML = "oi" + stream;
     localStream = stream;
     localVideo.srcObject = stream;
-
+    localVideoContainer.style.display = "flex";
     socket.emit("ready", roomNumber);
   } catch (err) {
     alert(err);
@@ -194,6 +187,7 @@ socket.on("offer", async (event) => {
 
 socket.on("answer", (event) => {
   rtcPeerConnection.setRemoteDescription(new RTCSessionDescription(event));
+  remoteVideoContainer.style.display = "flex";
 });
 
 socket.on("candidate", (event) => {
@@ -208,10 +202,12 @@ socket.on("disconnect-user", () => {
   console.log("teste");
   remoteStream = null;
   remoteVideo.srcObject = null;
+  remoteVideoContainer.style.display = "none";
 });
 function onAddStream(event) {
   remoteVideo.srcObject = event.streams[0];
   remoteStream = event.streams[0];
+  remoteVideoContainer.style.display = "flex";
 }
 
 function onIceCandidate(event) {

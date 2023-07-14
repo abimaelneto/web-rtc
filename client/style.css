@@ -1,3 +1,69 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+body {
+  background-color: lightgrey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+#select-room {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: 5px;
+}
+
+#consulting-room {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%;
+}
+
+.video-container {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem auto;
+  border: 2px solid grey;
+  height: 30vh;
+  width: fit-content;
+  position: relative;
+  /* display: none; */
+}
+
 video {
-  width: 400px;
+  height: 100%;
+  /* width: 100%; */
+}
+
+button.mute {
+  background: grey;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  border: 0;
+}
+
+.mute {
+}
+.muted {
+  background: red !important;
 }
