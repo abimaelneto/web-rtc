@@ -20,10 +20,34 @@
         <input type="text" id="call-name-input" />
         <button id="set-name">Set Name</button>
       </p>
-      <video id="local-video" autoplay></video>
-      <video id="remote-video" autoplay></video>
+      <div id="chat"></div>
+      <div class="video-container">
+        <button class="mute" name="local">Mute</button>
+        <video id="local-video" autoplay></video>
+      </div>
+      <div class="video-container">
+        <button class="mute" name="remote">Mute</button>
+
+        <video id="remote-video" autoplay></video>
+      </div>
     </div>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script src="./main.js"></script>
+    <style>
+      video {
+        position: relative;
+      }
+      button.mute {
+        background: grey;
+        position: absolute;
+        z-index: 10;
+      }
+
+      .mute {
+      }
+      .muted {
+        background: red !important;
+      }
+    </style>
   </body>
 </html>
