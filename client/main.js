@@ -93,6 +93,7 @@ muteBtns.forEach(
 socket.on("created", async (room) => {
   try {
     const stream = await navigator.mediaDevices.getUserMedia(streamConstraints);
+    document.querySelector("#test").innerHTML = "oi" + stream;
 
     localStream = stream;
     localVideo.srcObject = stream;
@@ -106,7 +107,7 @@ socket.on("created", async (room) => {
 socket.on("joined", async (room) => {
   try {
     const stream = await navigator.mediaDevices.getUserMedia(streamConstraints);
-
+    document.querySelector("#test").innerHTML = "oi" + stream;
     localStream = stream;
     localVideo.srcObject = stream;
 
