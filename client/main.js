@@ -204,6 +204,11 @@ socket.on("candidate", (event) => {
   rtcPeerConnection.addIceCandidate(candidate);
 });
 
+socket.on("disconnect-user", () => {
+  console.log("teste");
+  remoteStream = null;
+  remoteVideo.srcObject = null;
+});
 function onAddStream(event) {
   remoteVideo.srcObject = event.streams[0];
   remoteStream = event.streams[0];
@@ -241,3 +246,7 @@ function onMessage(event) {
     }
   }
 }
+
+window.onbeforeunload = () => {
+  socket.emit("disconnect-user", { room: roomNumber });
+};

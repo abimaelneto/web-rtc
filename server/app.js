@@ -56,8 +56,10 @@ io.on("connection", (socket) => {
   socket.on("answer", (event) => {
     socket.broadcast.to(event.room).emit("answer", event.sdp);
   });
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
+
+  socket.on("disconnect", (event) => {});
+  socket.on("disconnect-user", (event) => {
+    socket.broadcast.to(event.room).emit("disconnect-user", event.sdp);
   });
 });
 
