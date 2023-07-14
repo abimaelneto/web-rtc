@@ -99,7 +99,7 @@ socket.on("created", async (room) => {
 
     isCaller = true;
   } catch (err) {
-    console.error(err);
+    alert(err);
   }
 });
 
@@ -112,7 +112,7 @@ socket.on("joined", async (room) => {
 
     socket.emit("ready", roomNumber);
   } catch (err) {
-    console.error(err);
+    alert(err);
   }
 });
 
