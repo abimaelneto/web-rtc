@@ -29,23 +29,6 @@ const socket = io("https://web-rtc-server-9cim.onrender.com");
 
 // const socket = io("http://localhost:3333");
 
-const iceServers = {
-  iceServer: [
-    // { urls: "stun:stun.services.mozilla.com" },
-    // { urls: "stun:stun.l.google.mozilla.com:19302" },
-    {
-      urls: "turn:localhost:3478",
-      credential: "password",
-      username: "username",
-    },
-    {
-      urls: "turn:coturn-server-l452.onrender.com:3478",
-      credential: "password",
-      username: "username",
-    },
-  ],
-};
-
 const streamConstraints = {
   video: true,
   audio: true,
