@@ -1,3 +1,6 @@
+import { io, Socket } from "socket.io-client";
+import { createPeerConnectionInput, CustomEvent } from "./socket.types";
+
 const iceServers = {
   iceServer: [
     // { urls: "stun:stun.services.mozilla.com" },
@@ -16,20 +19,21 @@ const iceServers = {
 };
 
 export class SocketService {
-  socket;
-  peerConnection;
-  dataChannel;
-  caller;
+  socket?: Socket;
+  peerConnection?: RTCPeerConnection;
+  dataChannel?: RTCDataChannel;
+  caller?: boolean;
 
-  on(event, handler) {
+  on(event: Event, handler: Function) {
     this.socket.on(event, handler);
   }
 
-  async createOfferOrAnswer() {
+  async createOfferOrAnswer(room: string, onMessage: Function) {
+    if (!this.peerConnection || !this.socket) return;
     const operation = this.caller ? "offer" : "answer";
 
     this.caller
-      ? this.createDataChannel()
+      ? this.createDataChannel(room)
       : (this.peerConnection.ondatachannel = this.handleDataChannel);
 
     try {
@@ -40,21 +44,25 @@ export class SocketService {
       this.socket.emit(operation, {
         type: operation,
         sdp: sessionDescription,
-        room: roomNumber,
+        room,
       });
     } catch (err) {
       console.error(err);
     }
   }
 
-  async createPeerConnection({ onAddStream, stream, event }) {
+  async createPeerConnection({
+    onAddStream,
+    stream,
+    event,
+  }: createPeerConnectionInput) {
     this.peerConnection = new RTCPeerConnection(iceServers);
     this.peerConnection.onicecandidate = handleIceCandidate;
     this.peerConnection.ontrack = onAddStream;
     this.peerConnection.addTrack(stream.getTracks()[0], stream);
     this.peerConnection.addTrack(stream.getTracks()[1], stream);
 
-    if (!caller) {
+    if (!this.caller) {
       this.peerConnection.setRemoteDescription(
         new RTCSessionDescription(event)
       );
@@ -62,25 +70,27 @@ export class SocketService {
     this.createOfferOrAnswer();
   }
 
-  handleAnswer(event) {
-    this.peerConnection.setRemoteDescription(new RTCSessionDescription(event));
+  handleAnswer(event: Event) {
+    this.peerConnection?.setRemoteDescription(new RTCSessionDescription(event));
   }
-  handleIceCandidate(event) {
+  handleIceCandidate(event: CustomEvent) {
     const candidate = new RTCIceCandidate({
       sdpMLineIndex: event.label,
       candidate: event.candidate,
     });
-    this.peerConnection.addIceCandidate(candidate);
+    this.peerConnection?.addIceCandidate(candidate);
   }
-  createDataChannel() {
-    this.dataChannel = this.peerConnection.createDataChannel(roomNumber);
+  createDataChannel(roomNumber: string) {
+    this.dataChannel = this.peerConnection?.createDataChannel(
+      roomNumber
+    ) as RTCDataChannel;
     this.dataChannel.onopen = (e) => {
       console.log("Data Channel successfully opened");
     };
     this.dataChannel.onmessage = onMessage;
   }
-  handleDataChannel(event) {
-    this.dataChannel = event.channel;
+  handleDataChannel(event: CustomEvent) {
+    this.dataChannel = event.channel as RTCDataChannel;
     this.dataChannel.onopen = (e) => {
       console.log("Data Channel successfully opened");
     };

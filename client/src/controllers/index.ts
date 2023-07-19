@@ -38,7 +38,7 @@ export class Controller {
     });
   }
 
-  async onJoined(room) {
+  async onJoined() {
     this.handlePromise(async () => {
       const video = await this.cameraService.getVideo();
       this.videosView.setLocalVideo(video);
